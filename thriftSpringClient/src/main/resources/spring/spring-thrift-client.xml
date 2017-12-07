@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="com.chelsea.thriftSpring"/>
+	
+	<bean id="zookeeperUtil" class="com.chelsea.thriftSpring.zookeeper.ZookeeperUtil" init-method="init">
+		<property name="zooKeeperIpAddress" value="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"></property>
+	</bean>
+	
+	<bean id="thriftRpcClient" class="com.chelsea.thriftSpring.thrift.ThriftClientProxyFactory"  init-method="init"  destroy-method="close">
+        <property name="normalService" value="com.chelsea.thriftSpring.thrift.NormalService"></property>
+        <property name="maxActive" value="20"></property>
+        <property name="thriftServerPath" value="/myproject/thrift"></property>
+    </bean>
+    
+</beans>
